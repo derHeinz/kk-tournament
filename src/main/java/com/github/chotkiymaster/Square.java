@@ -1,6 +1,7 @@
 package com.github.chotkiymaster;
 
 public class Square {
+    private String name;
     private Wall upperWall;
     public Wall getUpperWall() {
         return upperWall;
@@ -38,13 +39,16 @@ public class Square {
     private Wall rightWall;
     private Wall bottomWall;
 
-    public Square(Wall upperWall, Wall leftWall, Wall rightWall, Wall bottomWall){
-        this.upperWall = upperWall;
+    public Square(Wall leftWall, Wall upperWall, Wall rightWall, Wall bottomWall){
         this.leftWall = leftWall;
+        this.upperWall = upperWall;
         this.rightWall = rightWall;
         this.bottomWall = bottomWall;
     }
-    public Square(){
+    /*public Square(){
         //Bewusst: nichts
+    }*/
+    public void setName(String name) {
+        this.name = name;
     }
 }
