@@ -8,7 +8,7 @@ public class Field {
     public Field(int countX, int countY) {
         //TODO
         this.squares = new Square[countX][countY];
-        Wall[] walls = new Wall[]{new Wall(), new Wall(), new Wall(), new Wall()};
+        //Wall[] walls = new Wall[]{new Wall(), new Wall(), new Wall(), new Wall()};
         //Square square1 = new Square(walls[0], walls[1], walls[2], walls[3]);
         //Square square2 = new Square();
         //square2.setLeftWall(walls[0]);
@@ -16,18 +16,18 @@ public class Field {
             for (int x = 0; x < countX; x++){
 
                 if(x == 0 && y == 0){
-                    this.squares[x][y] = new Square(walls[0], walls[1], walls[2], walls[3]);
+                    this.squares[x][y] = new Square(new Wall(), new Wall(), new Wall(), new Wall());
                 }
                 else if(x == 0){
-                    this.squares[x][y] = new Square(walls[0], walls[1], walls[2], walls[3]);
+                    this.squares[x][y] = new Square(new Wall(), new Wall(), new Wall(), new Wall());
                     this.squares[x][y].setBottomWall(this.squares[x][y-1].getUpperWall());
                 }
                 else if(y == 0){
-                    this.squares[x][y] = new Square(walls[0], walls[1], walls[2], walls[3]);
+                    this.squares[x][y] = new Square(new Wall(), new Wall(), new Wall(), new Wall());
                     this.squares[x][y].setLeftWall(this.squares[x-1][y].getRightWall());
                 }
                 else {
-                    this.squares[x][y] = new Square(walls[0], walls[1], walls[2], walls[3]);
+                    this.squares[x][y] = new Square(new Wall(), new Wall(), new Wall(), new Wall());
                     this.squares[x][y].setLeftWall(this.squares[x-1][y].getRightWall());
                     this.squares[x][y].setBottomWall(this.squares[x][y-1].getUpperWall());
                 }
