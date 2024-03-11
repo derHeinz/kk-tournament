@@ -3,6 +3,10 @@ package com.github.chotkiymaster;
 import java.util.List;
 
 public class Field {
+    public Square[][] getSquares() {
+        return squares;
+    }
+
     private Square[][] squares;
 
     public Field(int countX, int countY) {
