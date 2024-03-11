@@ -2,7 +2,6 @@ package com.github.chotkiymaster;
 
 import org.junit.jupiter.api.Test;
 
-import java.util.Arrays;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
@@ -32,15 +31,12 @@ class FieldTest {
                 assertThat(String.format("square[%d][%d] should%s have bottom wall closed", x, y, isDownMost(x, y, squares) ? "": " not"), squares[x][y].getBottomWall().isClosed(), equalTo(isDownMost(x, y, squares)));
             }
         }
-        for (int y = 0; y < countY; y++) {
-            for (int x = 0; x < countX; x++) {
-                for (int yBis = 0; y < countY; y++) {
-                    for (int xBis = 0; x < countX; x++) {
-                       if (x != xBis && );
-                    }
-
+        
     }
-
+    @Test
+    void firstOutput() {
+        System.out.println("jsfjds");
+    }
 
     private boolean isLeftMost(int x, int y, Square[][] squares) {
         return x == 0;

@@ -19,22 +19,13 @@ public class Field {
         for (int y = 0; y < countY; y++){
             for (int x = 0; x < countX; x++){
 
-                if(x == 0 && y == 0){
-                    this.squares[x][y] = new Square(new Wall(), new Wall(), new Wall(), new Wall());
-                }
-                else if(x == 0){
-                    this.squares[x][y] = new Square(new Wall(), new Wall(), new Wall(), new Wall());
-                    this.squares[x][y].setBottomWall(this.squares[x][y-1].getUpperWall());
-                }
-                else if(y == 0){
-                    this.squares[x][y] = new Square(new Wall(), new Wall(), new Wall(), new Wall());
-                    this.squares[x][y].setLeftWall(this.squares[x-1][y].getRightWall());
-                }
-                else {
-                    this.squares[x][y] = new Square(new Wall(), new Wall(), new Wall(), new Wall());
-                    this.squares[x][y].setLeftWall(this.squares[x-1][y].getRightWall());
-                    this.squares[x][y].setBottomWall(this.squares[x][y-1].getUpperWall());
-                }
+                this.squares[x][y] = new Square(
+                    x>0 ? this.squares[x-1][y].getRightWall() : new Wall(), 
+                    new Wall(), 
+                    new Wall(), 
+                    y>0 ? this.squares[x][y-1].getUpperWall() : new Wall()
+                    );
+
                 
                 /*this.squares[x][y] = new Square(walls[0], walls[1], walls[2], walls[3]);
                 this.squares[x][y].setRightWall(this.squares[x+1][y].getLeftWall());*/
