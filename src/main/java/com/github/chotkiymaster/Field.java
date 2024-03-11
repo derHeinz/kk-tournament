@@ -1,6 +1,20 @@
 package com.github.chotkiymaster;
 
+import java.awt.*;
+import java.awt.font.FontRenderContext;
+import java.awt.font.GlyphVector;
+import java.awt.geom.AffineTransform;
+import java.awt.geom.PathIterator;
+import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
+import java.awt.image.BufferedImage;
+import java.awt.image.BufferedImageOp;
+import java.awt.image.ImageObserver;
+import java.awt.image.RenderedImage;
+import java.awt.image.renderable.RenderableImage;
+import java.text.AttributedCharacterIterator;
 import java.util.List;
+import java.util.Map;
 
 public class Field {
     public Square[][] getSquares() {
@@ -46,5 +60,15 @@ public class Field {
             }
         }
         
+    }
+
+    void draw() {
+        Graphics2D graphics2D = new BufferedImage(this.squares.length * 23 +3, this.squares[0].length * 23 + 3, BufferedImage.TYPE_BYTE_GRAY).createGraphics();
+        graphics2D.drawLine(0,0, 20, 50);
+        graphics2D.draw(new Rectangle2D.Double(30., 30., 50., 40.));
+        graphics2D.fill(new Rectangle2D.Double(70., 70., 90., 80.));
+        graphics2D.drawString("A", 40, 60);
+
+        var sndImage = graphics2D;
     }
 }

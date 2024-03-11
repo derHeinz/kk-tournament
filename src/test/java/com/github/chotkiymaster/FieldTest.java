@@ -35,7 +35,8 @@ class FieldTest {
     }
     @Test
     void firstOutput() {
-        System.out.println("jsfjds");
+        Field fieldToDisplay = new Field(5, 7);
+        fieldToDisplay.draw();
     }
 
     private boolean isLeftMost(int x, int y, Square[][] squares) {
