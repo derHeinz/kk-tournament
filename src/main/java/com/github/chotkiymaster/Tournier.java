@@ -1,7 +1,7 @@
 package com.github.chotkiymaster;
 
 public class Tournier {
-    private Player[] players = new Player[]{new Player(), new Player(), new Player()};
+    private Player[] players = new Player[]{new PlayerJan(), new PlayerJan(), new PlayerJan()};
 
     public void start(){
         for(int x = 0; x < 30 ; x++){
