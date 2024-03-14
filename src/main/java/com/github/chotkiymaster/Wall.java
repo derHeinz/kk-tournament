@@ -11,8 +11,8 @@ public class Wall {
         return closed;
     }
 
-    public void setClosed(boolean isClosed) {
-        this.closed = isClosed;
+    public void setClosed(boolean closed) {
+        this.closed = closed;
     }
 
     void paint(Graphics2D graphics) {

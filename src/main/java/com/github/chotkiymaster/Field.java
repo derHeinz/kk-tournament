@@ -2,8 +2,6 @@ package com.github.chotkiymaster;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 
 public class Field extends JComponent {
 
@@ -15,7 +13,7 @@ public class Field extends JComponent {
         return squares;
     }
 
-    private final Square[][] squares;
+    private Square[][] squares;
 
     public Field(int countX, int countY) {
         this.setSize(
@@ -50,34 +48,19 @@ public class Field extends JComponent {
                 //square.setName("square" + x);
             }
         }
-        addMouseListener(new MouseListener() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                System.out.printf("Mouse clicked at (%d, %d)%n", e.getX(), e.getY());
-            }
-
-            @Override
-            public void mousePressed(MouseEvent e) {
-
-            }
-
-            @Override
-            public void mouseReleased(MouseEvent e) {
-
-            }
-
-            @Override
-            public void mouseEntered(MouseEvent e) {
-
-            }
-
-            @Override
-            public void mouseExited(MouseEvent e) {
-
-            }
-        });
+        addMouseListener(new KKMouseListener());
     }
 
+    public boolean isEnd() {
+        for (int y = 0; y < this.squares[0].length; y++){
+            for (int x = 0; x < this.squares.length; x++){
+                if(!squares[x][y].isClosed()){
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
     @Override
     protected void paintComponent(Graphics graphics) {
         if (graphics instanceof Graphics2D graphics2D) {
@@ -100,9 +83,5 @@ public class Field extends JComponent {
     public Dimension getPreferredSize() {
         final var insets = getBorder().getBorderInsets(this);
         return new Dimension(getWidth() + insets.left + insets.right, getHeight() + insets.bottom + insets.top);
-    }
-
-    void nurso(MouseEvent ev) {
-        processMouseEvent(ev);
     }
 }

@@ -6,8 +6,11 @@ import java.util.List;
 import static com.github.chotkiymaster.Field.SQUARE_SIZE;
 
 public class Square {
-    private String name;
     private Wall upperWall;
+    private Wall leftWall;
+    private Wall rightWall;
+    private Wall bottomWall;
+
     public Wall getUpperWall() {
         return upperWall;
     }
@@ -40,9 +43,6 @@ public class Square {
         this.bottomWall = bottomWall;
     }
 
-    private Wall leftWall;
-    private Wall rightWall;
-    private Wall bottomWall;
 
     public Square(Wall leftWall, Wall upperWall, Wall rightWall, Wall bottomWall){
         this.leftWall = leftWall;
@@ -50,11 +50,9 @@ public class Square {
         this.rightWall = rightWall;
         this.bottomWall = bottomWall;
     }
-    /*public Square(){
-        //Bewusst: nichts
-    }*/
-    public void setName(String name) {
-        this.name = name;
+
+    public boolean isClosed() {
+        return this.leftWall.isClosed() && this.upperWall.isClosed() && this.rightWall.isClosed() && this.bottomWall.isClosed();
     }
 
     void paint(Graphics2D graphics) {
