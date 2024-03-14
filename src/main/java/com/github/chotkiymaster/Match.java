@@ -13,8 +13,8 @@ public class Match {
     }
     public void start(){
         while(!this.field.isEnd()){
-            spieler1.Step(this.field);
-            spieler2.Step(this.field);
+            spieler1.step(this.field);
+            spieler2.step(this.field);
         }
     }
 }

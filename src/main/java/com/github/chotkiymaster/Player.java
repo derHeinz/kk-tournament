@@ -1,8 +1,6 @@
 package com.github.chotkiymaster;
 
-public class Player {
-    public void Step(Field field){
-
-    }
-    public String name = "name";
+public interface Player {
+    public void step(Field field);
+    public String getName();
 }
