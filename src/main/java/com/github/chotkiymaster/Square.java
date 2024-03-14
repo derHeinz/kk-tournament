@@ -1,7 +1,6 @@
 package com.github.chotkiymaster;
 
 public class Square {
-    private String name;
     private Wall upperWall;
     public Wall getUpperWall() {
         return upperWall;
@@ -45,10 +44,11 @@ public class Square {
         this.rightWall = rightWall;
         this.bottomWall = bottomWall;
     }
-    /*public Square(){
+    public Square(){
         //Bewusst: nichts
-    }*/
-    public void setName(String name) {
-        this.name = name;
+    }
+
+    public boolean isClosed() {
+        return this.leftWall.isClosed() && this.upperWall.isClosed() && this.rightWall.isClosed() && this.bottomWall.isClosed();
     }
 }

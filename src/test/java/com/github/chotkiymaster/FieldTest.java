@@ -62,4 +62,6 @@ class FieldTest {
     private boolean hasUpperNeighbour(int y, Square[][] squares) {
         return squares[0].length > y + 1;
     }
+
+    
 }

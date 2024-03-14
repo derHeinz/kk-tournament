@@ -1,20 +1,8 @@
 package com.github.chotkiymaster;
 
 import java.awt.*;
-import java.awt.font.FontRenderContext;
-import java.awt.font.GlyphVector;
-import java.awt.geom.AffineTransform;
-import java.awt.geom.PathIterator;
-import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
-import java.awt.image.BufferedImageOp;
-import java.awt.image.ImageObserver;
-import java.awt.image.RenderedImage;
-import java.awt.image.renderable.RenderableImage;
-import java.text.AttributedCharacterIterator;
-import java.util.List;
-import java.util.Map;
 
 public class Field {
     public Square[][] getSquares() {
@@ -24,7 +12,7 @@ public class Field {
     private Square[][] squares;
 
     public Field(int countX, int countY) {
-        //TODO
+
         this.squares = new Square[countX][countY];
         //Wall[] walls = new Wall[]{new Wall(), new Wall(), new Wall(), new Wall()};
         //Square square1 = new Square(walls[0], walls[1], walls[2], walls[3]);
@@ -70,5 +58,17 @@ public class Field {
         graphics2D.drawString("A", 40, 60);
 
         var sndImage = graphics2D;
+    }
+
+    public boolean isEnd() {
+        for (int y = 0; y < this.squares[0].length; y++){
+            for (int x = 0; x < this.squares.length; x++){
+                squares[x][y].isClosed();
+                if(!squares[x][y].isClosed()){
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 }
