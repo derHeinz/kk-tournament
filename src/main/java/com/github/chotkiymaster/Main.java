@@ -1,13 +1,25 @@
 package com.github.chotkiymaster;
 
 
-public class Main {
-    public static void main(String[] args) {
-        System.out.printf("Hello and welcome!");
+import javax.swing.*;
+import java.awt.*;
 
-        for (int i = 1; i <= 5; i++) {
-            System.out.println("i = " + i);
-        }
-        Field field = new Field(10, 20);
+public class Main {
+
+
+    public static void main(String[] args) {
+        Field field = new Field(13, 27);
+        display(field);
+    }
+
+    private static void display(Field field) {
+
+        JFrame frame = new JFrame("For Testing");
+        frame.setLayout(new BorderLayout());
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        frame.add(field);
+        frame.pack();
+        frame.setLocationByPlatform(true);
+        frame.setVisible(true);
     }
 }

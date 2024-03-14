@@ -1,5 +1,10 @@
 package com.github.chotkiymaster;
 
+import java.awt.*;
+import java.util.List;
+
+import static com.github.chotkiymaster.Field.SQUARE_SIZE;
+
 public class Square {
     private String name;
     private Wall upperWall;
@@ -50,5 +55,14 @@ public class Square {
     }*/
     public void setName(String name) {
         this.name = name;
+    }
+
+    void paint(Graphics2D graphics) {
+        List.of(this.bottomWall, this.rightWall, this.upperWall, this.leftWall)
+                .forEach(wall -> {
+                    wall.paint(graphics);
+                    graphics.translate(SQUARE_SIZE, 0);
+                    graphics.rotate(-1.57079633); // 90° anti clockwise
+                });
     }
 }

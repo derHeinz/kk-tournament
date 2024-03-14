@@ -3,6 +3,10 @@ package com.github.chotkiymaster;
 import org.junit.jupiter.api.Test;
 
 
+import javax.swing.*;
+
+import java.awt.*;
+
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.sameInstance;
@@ -32,11 +36,6 @@ class FieldTest {
             }
         }
         
-    }
-    @Test
-    void firstOutput() {
-        Field fieldToDisplay = new Field(5, 7);
-        fieldToDisplay.draw();
     }
 
     private boolean isLeftMost(int x, int y, Square[][] squares) {

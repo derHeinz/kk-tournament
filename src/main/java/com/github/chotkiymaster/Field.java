@@ -1,35 +1,30 @@
 package com.github.chotkiymaster;
 
+import javax.swing.*;
 import java.awt.*;
-import java.awt.font.FontRenderContext;
-import java.awt.font.GlyphVector;
-import java.awt.geom.AffineTransform;
-import java.awt.geom.PathIterator;
-import java.awt.geom.Point2D;
-import java.awt.geom.Rectangle2D;
-import java.awt.image.BufferedImage;
-import java.awt.image.BufferedImageOp;
-import java.awt.image.ImageObserver;
-import java.awt.image.RenderedImage;
-import java.awt.image.renderable.RenderableImage;
-import java.text.AttributedCharacterIterator;
-import java.util.List;
-import java.util.Map;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
-public class Field {
+public class Field extends JComponent {
+
+    public static final int SQUARE_SIZE = 23;
+    public static final int GAP_BETWEEN_SQUARES = -2;
+    public static final int OUTER_BORDER = 3;
+
     public Square[][] getSquares() {
         return squares;
     }
 
-    private Square[][] squares;
+    private final Square[][] squares;
 
     public Field(int countX, int countY) {
-        //TODO
+        this.setSize(
+                countX * (SQUARE_SIZE + GAP_BETWEEN_SQUARES) - GAP_BETWEEN_SQUARES,
+                countY * (SQUARE_SIZE + GAP_BETWEEN_SQUARES) - GAP_BETWEEN_SQUARES
+        );
+        setBorder(BorderFactory.createEmptyBorder(OUTER_BORDER, OUTER_BORDER, OUTER_BORDER, OUTER_BORDER));
+
         this.squares = new Square[countX][countY];
-        //Wall[] walls = new Wall[]{new Wall(), new Wall(), new Wall(), new Wall()};
-        //Square square1 = new Square(walls[0], walls[1], walls[2], walls[3]);
-        //Square square2 = new Square();
-        //square2.setLeftWall(walls[0]);
         for (int y = 0; y < countY; y++){
             for (int x = 0; x < countX; x++){
 
@@ -39,10 +34,6 @@ public class Field {
                     new Wall(), 
                     y>0 ? this.squares[x][y-1].getUpperWall() : new Wall()
                     );
-
-                
-                /*this.squares[x][y] = new Square(walls[0], walls[1], walls[2], walls[3]);
-                this.squares[x][y].setRightWall(this.squares[x+1][y].getLeftWall());*/
 
                 if(x == 0){
                     this.squares[x][y].getLeftWall().setClosed(true);
@@ -59,16 +50,59 @@ public class Field {
                 //square.setName("square" + x);
             }
         }
-        
+        addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                System.out.printf("Mouse clicked at (%d, %d)%n", e.getX(), e.getY());
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+
+            }
+        });
     }
 
-    void draw() {
-        Graphics2D graphics2D = new BufferedImage(this.squares.length * 23 +3, this.squares[0].length * 23 + 3, BufferedImage.TYPE_BYTE_GRAY).createGraphics();
-        graphics2D.drawLine(0,0, 20, 50);
-        graphics2D.draw(new Rectangle2D.Double(30., 30., 50., 40.));
-        graphics2D.fill(new Rectangle2D.Double(70., 70., 90., 80.));
-        graphics2D.drawString("A", 40, 60);
+    @Override
+    protected void paintComponent(Graphics graphics) {
+        if (graphics instanceof Graphics2D graphics2D) {
+            var initialTransform = graphics2D.getTransform();
+            int countX = squares.length;
+            int countY = squares[0].length;
 
-        var sndImage = graphics2D;
+            graphics.setColor(Color.BLACK);
+            for (int y = 0; y < countY; y++) {
+                for (int x = 0; x < countX; x++) {
+                    graphics2D.translate(OUTER_BORDER + x * (SQUARE_SIZE + GAP_BETWEEN_SQUARES), this.getHeight() - OUTER_BORDER - y * (SQUARE_SIZE + GAP_BETWEEN_SQUARES));
+                    this.squares[x][y].paint(graphics2D);
+                    graphics2D.setTransform(initialTransform);
+                }
+            }
+        }
+    }
+
+    @Override
+    public Dimension getPreferredSize() {
+        final var insets = getBorder().getBorderInsets(this);
+        return new Dimension(getWidth() + insets.left + insets.right, getHeight() + insets.bottom + insets.top);
+    }
+
+    void nurso(MouseEvent ev) {
+        processMouseEvent(ev);
     }
 }
