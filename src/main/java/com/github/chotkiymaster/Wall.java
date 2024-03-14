@@ -1,13 +1,13 @@
 package com.github.chotkiymaster;
 
 public class Wall {
-    private boolean isClosed = false;
+    private boolean closed = false;
 
     public boolean isClosed() {
-        return isClosed;
+        return closed;
     }
 
-    public void setClosed(boolean isClosed) {
-        this.isClosed = isClosed;
+    public void setClosed(boolean closed) {
+        this.closed = closed;
     }
 }

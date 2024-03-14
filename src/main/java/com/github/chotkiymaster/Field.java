@@ -63,7 +63,6 @@ public class Field {
     public boolean isEnd() {
         for (int y = 0; y < this.squares[0].length; y++){
             for (int x = 0; x < this.squares.length; x++){
-                squares[x][y].isClosed();
                 if(!squares[x][y].isClosed()){
                     return false;
                 }

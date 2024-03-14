@@ -2,6 +2,10 @@ package com.github.chotkiymaster;
 
 public class Square {
     private Wall upperWall;
+    private Wall leftWall;
+    private Wall rightWall;
+    private Wall bottomWall;
+
     public Wall getUpperWall() {
         return upperWall;
     }
@@ -34,18 +38,12 @@ public class Square {
         this.bottomWall = bottomWall;
     }
 
-    private Wall leftWall;
-    private Wall rightWall;
-    private Wall bottomWall;
 
     public Square(Wall leftWall, Wall upperWall, Wall rightWall, Wall bottomWall){
         this.leftWall = leftWall;
         this.upperWall = upperWall;
         this.rightWall = rightWall;
         this.bottomWall = bottomWall;
-    }
-    public Square(){
-        //Bewusst: nichts
     }
 
     public boolean isClosed() {
