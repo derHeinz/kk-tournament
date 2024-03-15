@@ -2,6 +2,8 @@ package com.github.chotkiymaster;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Arrays;
+import java.util.stream.Collectors;
 
 public class Field extends JComponent {
 
@@ -61,6 +63,48 @@ public class Field extends JComponent {
         }
         return true;
     }
+
+    @Override
+    public boolean equals(Object that) {
+        if (this == that) {
+            return true;
+        }
+        if (that == null) {
+            return false;
+        }
+        if (that instanceof Field thatField) {
+            if (this.getSquares().length != thatField.squares.length || this.squares[0].length != thatField.squares[0].length) {
+                return false;
+            }
+            for (int y = 0; y < this.squares[0].length; y++) {
+                for (int x = 0; x < this.squares.length; x++) {
+                    if (!(this.getSquares()[x][y] == null ? thatField.getSquares()[x][y] == null : this.getSquares()[x][y].equals(thatField.getSquares()[x][y]))) {
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public String toString() {
+
+        var height = this.squares[0].length;
+        var transposeSquares = new Square[height][this.squares.length];
+        for (int y = 0; y < this.squares[0].length; y++) {
+            for (int x = 0; x < this.squares.length; x++) {
+                transposeSquares[height - 1 - y][x] = this.squares[x][y];
+            }
+        }
+        return String.format("{%n%s%n}",
+                Arrays.stream(transposeSquares)
+                        .map(Arrays::toString)
+                        .collect(Collectors.joining(String.format(",%n")))
+        );
+    }
+
     @Override
     protected void paintComponent(Graphics graphics) {
         if (graphics instanceof Graphics2D graphics2D) {

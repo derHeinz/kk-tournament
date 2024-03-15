@@ -55,6 +55,32 @@ public class Square {
         return this.leftWall.isClosed() && this.upperWall.isClosed() && this.rightWall.isClosed() && this.bottomWall.isClosed();
     }
 
+    @Override
+    public String toString() {
+        return String.format("{R: %d, U: %d, L: %d, B: %d}",
+                this.rightWall.isClosed() ? 1 : 0,
+                this.upperWall.isClosed() ? 1 : 0,
+                this.leftWall.isClosed() ? 1 : 0,
+                this.bottomWall.isClosed() ? 1 : 0
+        );
+    }
+
+    @Override
+    public boolean equals(Object that) {
+        if (this == that) {
+            return true;
+        }
+        if (that == null) {
+            return false;
+        }
+        if (that instanceof Square thatSquare) {
+            return (this.rightWall == null ? thatSquare.rightWall == null : this.rightWall.equals(thatSquare.rightWall))
+                    && (this.upperWall == null ? thatSquare.upperWall == null : this.upperWall.equals(thatSquare.upperWall))
+                    && (this.leftWall == null ? thatSquare.leftWall == null : this.leftWall.equals(thatSquare.leftWall))
+                    && (this.bottomWall == null ? thatSquare.bottomWall == null : this.bottomWall.equals(thatSquare.bottomWall));
+        }
+        return false;
+    }
     void paint(Graphics2D graphics) {
         List.of(this.bottomWall, this.rightWall, this.upperWall, this.leftWall)
                 .forEach(wall -> {
