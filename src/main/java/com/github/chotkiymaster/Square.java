@@ -2,6 +2,7 @@ package com.github.chotkiymaster;
 
 import java.awt.*;
 import java.util.List;
+import java.util.Objects;
 
 import static com.github.chotkiymaster.Field.SQUARE_SIZE;
 
@@ -108,10 +109,10 @@ public class Square {
             return false;
         }
         if (that instanceof Square thatSquare) {
-            return (this.rightWall == null ? thatSquare.rightWall == null : this.rightWall.equals(thatSquare.rightWall))
-                    && (this.upperWall == null ? thatSquare.upperWall == null : this.upperWall.equals(thatSquare.upperWall))
-                    && (this.leftWall == null ? thatSquare.leftWall == null : this.leftWall.equals(thatSquare.leftWall))
-                    && (this.bottomWall == null ? thatSquare.bottomWall == null : this.bottomWall.equals(thatSquare.bottomWall));
+            return (Objects.equals(this.rightWall, thatSquare.rightWall))
+                    && (Objects.equals(this.upperWall, thatSquare.upperWall))
+                    && (Objects.equals(this.leftWall, thatSquare.leftWall))
+                    && (Objects.equals(this.bottomWall, thatSquare.bottomWall));
         }
         return false;
     }

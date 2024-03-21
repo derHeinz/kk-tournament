@@ -60,4 +60,9 @@ public class SmarterPlayerDirk extends PlayerDirk {
             default -> WallValue.VmoreXmore;
         };
     }
+
+    @Override
+    public String getName() {
+        return "Smarter Dirk";
+    }
 }

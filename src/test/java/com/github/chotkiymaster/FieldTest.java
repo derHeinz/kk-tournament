@@ -39,9 +39,9 @@ class FieldTest {
 
     @Test
     void testToString() {
-        assertThat(new Field(1, 1).toString(), equalTo(String.format("{%n[{R: 1, O: 1, L: 1, U: 1}]%n}")));
-        assertThat(new Field(2, 1).toString(), equalTo(String.format("{%n[{R: 0, O: 1, L: 1, U: 1}, {R: 1, O: 1, L: 0, U: 1}]%n}")));
-        assertThat(new Field(1, 2).toString(), equalTo(String.format("{%n[{R: 1, O: 1, L: 1, U: 0}],%n[{R: 1, O: 0, L: 1, U: 1}]%n}")));
+        assertThat(new Field(1, 1).toString(), equalTo(String.format("{%n[{R: 1, U: 1, L: 1, B: 1}]%n}")));
+        assertThat(new Field(2, 1).toString(), equalTo(String.format("{%n[{R: 0, U: 1, L: 1, B: 1}, {R: 1, U: 1, L: 0, B: 1}]%n}")));
+        assertThat(new Field(1, 2).toString(), equalTo(String.format("{%n[{R: 1, U: 1, L: 1, B: 0}],%n[{R: 1, U: 0, L: 1, B: 1}]%n}")));
     }
 
     private boolean isLeftMost(int x, int y, Square[][] squares) {

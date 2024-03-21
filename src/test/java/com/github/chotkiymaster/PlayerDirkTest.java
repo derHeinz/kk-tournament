@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.notNullValue;
 
 class PlayerDirkTest {
 
@@ -11,28 +12,16 @@ class PlayerDirkTest {
     void step() {
         var playerUnderTest = new PlayerDirk();
         var field = new Field(3,3);
-        var expectedField = createCloseField(3, 3);
+        var expectedField = TestHelper.createCloseField(3, 3);
 
         int x = 0;
         while (!field.isEnd()) {
             x++;
-            playerUnderTest.step(field);
+            var wall = playerUnderTest.step(field);
+            assertThat("each step must return a wall, except match is finished", wall, notNullValue());
+            wall.setClosed(true);
         }
-        assertThat(field, equalTo(expectedField));
-        assertThat(x, equalTo(12));
-    }
-
-    private Field createCloseField(int countX, int countY) {
-        var result = new Field(countX, countY);
-        var squares = result.getSquares();
-        for (int y = 0; y < countY; y++) {
-            for (int x = 0; x < countX; x++) {
-                squares[x][y].getRightWall().setClosed(true);
-                squares[x][y].getUpperWall().setClosed(true);
-                squares[x][y].getLeftWall().setClosed(true);
-                squares[x][y].getBottomWall().setClosed(true);
-            }
-        }
-        return result;
+        assertThat("all walls must be closed", field, equalTo(expectedField));
+        assertThat("a 3x3-field has 12 closable walls", x, equalTo(12));
     }
 }
