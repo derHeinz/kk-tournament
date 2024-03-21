@@ -49,4 +49,40 @@ public class Square {
     public boolean isClosed() {
         return this.leftWall.isClosed() && this.upperWall.isClosed() && this.rightWall.isClosed() && this.bottomWall.isClosed();
     }
+
+    public int closedWalls(){
+        if(this.leftWall.isClosed() && this.upperWall.isClosed() && this.rightWall.isClosed() && this.bottomWall.isClosed()){
+            return 4;
+        }
+        else if((this.leftWall.isClosed() && this.upperWall.isClosed() && this.rightWall.isClosed()) || 
+                (this.leftWall.isClosed() && this.upperWall.isClosed() && this.bottomWall.isClosed()) || 
+                (this.leftWall.isClosed() && this.rightWall.isClosed() && this.bottomWall.isClosed()) || 
+                (this.upperWall.isClosed() && this.rightWall.isClosed() && this.bottomWall.isClosed())){
+                    return 3;
+        }
+        /*else if((this.leftWall.isClosed()) || 
+                (this.upperWall.isClosed()) || 
+                (this.rightWall.isClosed()) || 
+                (this.bottomWall.isClosed())){
+                    return 3;
+        }*/
+        else if((this.leftWall.isClosed() && this.upperWall.isClosed()) || 
+                (this.leftWall.isClosed() && this.rightWall.isClosed()) || 
+                (this.leftWall.isClosed() && this.bottomWall.isClosed()) || 
+                (this.upperWall.isClosed() && this.rightWall.isClosed()) ||
+                (this.upperWall.isClosed() && this.bottomWall.isClosed()) ||
+                (this.rightWall.isClosed() && this.bottomWall.isClosed())){
+                    return 2;
+        }
+        else if((this.leftWall.isClosed()) || 
+                (this.upperWall.isClosed()) || 
+                (this.rightWall.isClosed()) || 
+                (this.bottomWall.isClosed())){
+                    return 1;
+        }
+        else{
+            return 0;
+        }
+
+    }
 }

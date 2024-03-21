@@ -1,8 +1,11 @@
 package com.github.chotkiymaster;
 
-import java.awt.*;
+import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class Field {
     public Square[][] getSquares() {
@@ -10,6 +13,8 @@ public class Field {
     }
 
     private Square[][] squares;
+
+    private Map<Wall, List<Square>> walls = new HashMap<>();
 
     public Field(int countX, int countY) {
 
@@ -26,8 +31,22 @@ public class Field {
                     new Wall(), 
                     new Wall(), 
                     y>0 ? this.squares[x][y-1].getUpperWall() : new Wall()
-                    );
-
+                );
+                
+                if(x > 0){
+                    this.walls.put(squares[x][y].getLeftWall(), List.of(this.squares[x][y], this.squares[x-1][y]));
+                }
+                else{
+                    this.walls.put(squares[x][y].getLeftWall(), List.of(this.squares[x][y]));
+                }
+                this.walls.put(squares[x][y].getUpperWall(), List.of(this.squares[x][y]));
+                this.walls.put(squares[x][y].getRightWall(), List.of(this.squares[x][y]));
+                if(y > 0){
+                    this.walls.put(squares[x][y].getBottomWall(), List.of(this.squares[x][y], this.squares[x][y-1]));
+                }
+                else{
+                    this.walls.put(squares[x][y].getBottomWall(), List.of(this.squares[x][y]));
+                }
                 
                 /*this.squares[x][y] = new Square(walls[0], walls[1], walls[2], walls[3]);
                 this.squares[x][y].setRightWall(this.squares[x+1][y].getLeftWall());*/
@@ -48,6 +67,10 @@ public class Field {
             }
         }
         
+    }
+
+    public List<Square> getNeighbours(Wall wall){
+        return this.walls.get(wall);
     }
 
     void draw() {

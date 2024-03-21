@@ -11,10 +11,33 @@ public class Match {
         this.field = field;
         
     }
+
+    private void keineAhnung(Player spieler, Integer points){
+        boolean rep;
+        do{
+            rep = false;
+            Wall curWall = spieler.step(this.field);
+            if(null != curWall && curWall.isClosed() == false){
+                curWall.setClosed(true);
+                for(int i = 0; i<this.field.getNeighbours(curWall).size(); i++){
+                    if(this.field.getNeighbours(curWall).get(i).closedWalls() == 4){
+                        points +=1;
+                        rep = true;
+                    }
+                }
+            }
+        }while(rep);
+    }
+
     public void start(){
+        Integer points1 = 0;
+        Integer points2 = 0;
         while(!this.field.isEnd()){
-            spieler1.step(this.field);
-            spieler2.step(this.field);
+
+            keineAhnung(spieler1, points1);
+            System.out.println("1");
+            keineAhnung(spieler2, points2);
         }
+        System.out.println("Spieler 1: " + points1 + "Spieler 2:" + points2);
     }
 }
