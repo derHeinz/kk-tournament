@@ -1,5 +1,10 @@
 package com.github.chotkiymaster;
 
+import java.awt.BorderLayout;
+
+import javax.swing.JFrame;
+import javax.swing.WindowConstants;
+
 public class Match {
     private Player spieler1;
     private Player spieler2;
@@ -37,7 +42,19 @@ public class Match {
             keineAhnung(spieler1, points1);
             System.out.println("1");
             keineAhnung(spieler2, points2);
+            display(this.field);
         }
         System.out.println("Spieler 1: " + points1 + "Spieler 2:" + points2);
+    }
+
+    private static void display(Field field) {
+
+        JFrame frame = new JFrame("For Testing");
+        frame.setLayout(new BorderLayout());
+        frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+        frame.add(field);
+        frame.pack();
+        frame.setLocationByPlatform(true);
+        frame.setVisible(true);
     }
 }

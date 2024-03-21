@@ -1,13 +1,20 @@
 package com.github.chotkiymaster;
 
 import java.awt.Graphics2D;
-import java.awt.geom.Rectangle2D;
-import java.awt.image.BufferedImage;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import javax.swing.*;
+import java.awt.*;
+import java.util.Arrays;
+import java.util.stream.Collectors;
 
-public class Field {
+public class Field extends JComponent {
+
+    public static final int SQUARE_SIZE = 23;
+    public static final int GAP_BETWEEN_SQUARES = -2;
+    public static final int OUTER_BORDER = 3;
+
     public Square[][] getSquares() {
         return squares;
     }
@@ -17,12 +24,13 @@ public class Field {
     private Map<Wall, List<Square>> walls = new HashMap<>();
 
     public Field(int countX, int countY) {
+        this.setSize(
+                countX * (SQUARE_SIZE + GAP_BETWEEN_SQUARES) - GAP_BETWEEN_SQUARES,
+                countY * (SQUARE_SIZE + GAP_BETWEEN_SQUARES) - GAP_BETWEEN_SQUARES
+        );
+        setBorder(BorderFactory.createEmptyBorder(OUTER_BORDER, OUTER_BORDER, OUTER_BORDER, OUTER_BORDER));
 
         this.squares = new Square[countX][countY];
-        //Wall[] walls = new Wall[]{new Wall(), new Wall(), new Wall(), new Wall()};
-        //Square square1 = new Square(walls[0], walls[1], walls[2], walls[3]);
-        //Square square2 = new Square();
-        //square2.setLeftWall(walls[0]);
         for (int y = 0; y < countY; y++){
             for (int x = 0; x < countX; x++){
 
@@ -73,15 +81,6 @@ public class Field {
         return this.walls.get(wall);
     }
 
-    void draw() {
-        Graphics2D graphics2D = new BufferedImage(this.squares.length * 23 +3, this.squares[0].length * 23 + 3, BufferedImage.TYPE_BYTE_GRAY).createGraphics();
-        graphics2D.drawLine(0,0, 20, 50);
-        graphics2D.draw(new Rectangle2D.Double(30., 30., 50., 40.));
-        graphics2D.fill(new Rectangle2D.Double(70., 70., 90., 80.));
-        graphics2D.drawString("A", 40, 60);
-
-        var sndImage = graphics2D;
-    }
 
     public boolean isEnd() {
         for (int y = 0; y < this.squares[0].length; y++){
@@ -92,5 +91,70 @@ public class Field {
             }
         }
         return true;
+    }
+
+    @Override
+    public boolean equals(Object that) {
+        if (this == that) {
+            return true;
+        }
+        if (that == null) {
+            return false;
+        }
+        if (that instanceof Field thatField) {
+            if (this.getSquares().length != thatField.squares.length || this.squares[0].length != thatField.squares[0].length) {
+                return false;
+            }
+            for (int y = 0; y < this.squares[0].length; y++) {
+                for (int x = 0; x < this.squares.length; x++) {
+                    if (!(this.getSquares()[x][y] == null ? thatField.getSquares()[x][y] == null : this.getSquares()[x][y].equals(thatField.getSquares()[x][y]))) {
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public String toString() {
+
+        var height = this.squares[0].length;
+        var transposeSquares = new Square[height][this.squares.length];
+        for (int y = 0; y < this.squares[0].length; y++) {
+            for (int x = 0; x < this.squares.length; x++) {
+                transposeSquares[height - 1 - y][x] = this.squares[x][y];
+            }
+        }
+        return String.format("{%n%s%n}",
+                Arrays.stream(transposeSquares)
+                        .map(Arrays::toString)
+                        .collect(Collectors.joining(String.format(",%n")))
+        );
+    }
+
+    @Override
+    protected void paintComponent(Graphics graphics) {
+        if (graphics instanceof Graphics2D graphics2D) {
+            var initialTransform = graphics2D.getTransform();
+            int countX = squares.length;
+            int countY = squares[0].length;
+
+            graphics.setColor(Color.BLACK);
+            for (int y = 0; y < countY; y++) {
+                for (int x = 0; x < countX; x++) {
+                    graphics2D.translate(OUTER_BORDER + x * (SQUARE_SIZE + GAP_BETWEEN_SQUARES), this.getHeight() - OUTER_BORDER - y * (SQUARE_SIZE + GAP_BETWEEN_SQUARES));
+                    this.squares[x][y].paint(graphics2D);
+                    graphics2D.setTransform(initialTransform);
+                }
+            }
+        }
+    }
+
+    @Override
+    public Dimension getPreferredSize() {
+        final var insets = getBorder().getBorderInsets(this);
+        return new Dimension(getWidth() + insets.left + insets.right, getHeight() + insets.bottom + insets.top);
     }
 }
