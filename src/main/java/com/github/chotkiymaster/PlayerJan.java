@@ -81,9 +81,18 @@ public class PlayerJan implements Player {
                     }
             }
         }
+        
+        Field virtualField = field;
+        return virtualstep(virtualField);
 
         
-        return null;
+        //return null;
+    }
+
+    private Wall virtualstep(Field field){
+        Square[][] squares = field.getSquares();
+
+        if(squares[0][0].getUpperWall().isClosed() == false);
     }
 
     public void so(){}
