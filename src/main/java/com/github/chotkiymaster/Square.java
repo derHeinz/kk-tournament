@@ -12,6 +12,8 @@ public class Square {
     private Wall rightWall;
     private Wall bottomWall;
 
+    private Player winner = null;
+
     public Wall getUpperWall() {
         return upperWall;
     }
@@ -116,7 +118,19 @@ public class Square {
         }
         return false;
     }
+
+    public void setWinner(Player winner) {
+        this.winner = winner;
+    }
+
+    public Player getWinner() {
+        return this.winner;
+    }
+
     void paint(Graphics2D graphics) {
+        if (null != this.winner) {
+            graphics.drawString(this.winner.getName().substring(0, 1), 8, -6);
+        }
         List.of(this.bottomWall, this.rightWall, this.upperWall, this.leftWall)
                 .forEach(wall -> {
                     wall.paint(graphics);

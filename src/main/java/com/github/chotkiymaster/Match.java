@@ -29,14 +29,16 @@ public class Match {
         boolean rep;
         do{
             rep = false;
-            long startTime = System.currentTimeMillis();
+            long startTime = System.nanoTime();
             Wall curWall = spieler.step(this.field);
-            long endTime = System.currentTimeMillis();
+            long endTime = System.nanoTime();
             this.calculationTime.put(spieler, this.calculationTime.get(spieler) + endTime - startTime);
             if(null != curWall && !curWall.isClosed()){
                 curWall.setClosed(true);
                 for(int i = 0; i<this.field.getNeighbours(curWall).size(); i++){
-                    if(this.field.getNeighbours(curWall).get(i).closedWalls() == 4){
+                    var currentSquare = this.field.getNeighbours(curWall).get(i);
+                    if(currentSquare.isClosed()){
+                        currentSquare.setWinner(spieler);
                         this.scores.put(spieler, this.scores.get(spieler) + 1);
                         rep = true;
                     }
@@ -52,7 +54,7 @@ public class Match {
     public void round() {
 
         if (this.field.isEnd()) {
-            System.out.printf("Spieler %s: %d (%d ms), Spieler %s: %d (%d ms)%n",
+            System.out.printf("Spieler %s: %d (%,d ns), Spieler %s: %d (%,d ns)%n",
                     this.spieler1.getName(),
                     this.scores.get(this.spieler1),
                     this.calculationTime.get(this.spieler1),
