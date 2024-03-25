@@ -12,6 +12,7 @@ public class Match {
     private Player spieler2;
     private Field field;
     Map<Player, Integer> scores = new HashMap<>();
+    Map<Player, Long> calculationTime = new HashMap<>();
 
     public Match(Player spieler1, Player spieler2, Field field){
         this.spieler1 = spieler1;
@@ -19,6 +20,8 @@ public class Match {
         this.field = field;
         this.scores.put(spieler1, 0);
         this.scores.put(spieler2, 0);
+        this.calculationTime.put(spieler1, 0L);
+        this.calculationTime.put(spieler2, 0L);
 
     }
 
@@ -26,7 +29,10 @@ public class Match {
         boolean rep;
         do{
             rep = false;
+            long startTime = System.currentTimeMillis();
             Wall curWall = spieler.step(this.field);
+            long endTime = System.currentTimeMillis();
+            this.calculationTime.put(spieler, this.calculationTime.get(spieler) + endTime - startTime);
             if(null != curWall && !curWall.isClosed()){
                 curWall.setClosed(true);
                 for(int i = 0; i<this.field.getNeighbours(curWall).size(); i++){
@@ -46,7 +52,14 @@ public class Match {
     public void round() {
 
         if (this.field.isEnd()) {
-            System.out.println("Spieler " + this.spieler1.getName() + ": " + this.scores.get(this.spieler1) + ", Spieler " + this.spieler2.getName() + ":" + this.scores.get(this.spieler2));
+            System.out.printf("Spieler %s: %d (%d ms), Spieler %s: %d (%d ms)%n",
+                    this.spieler1.getName(),
+                    this.scores.get(this.spieler1),
+                    this.calculationTime.get(this.spieler1),
+                    this.spieler2.getName(),
+                    this.scores.get(this.spieler2),
+                    this.calculationTime.get(this.spieler2)
+            );
         } else {
             keineAhnung(this.spieler1);
             keineAhnung(this.spieler2);

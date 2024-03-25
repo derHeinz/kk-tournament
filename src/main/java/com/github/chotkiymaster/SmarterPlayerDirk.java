@@ -36,7 +36,7 @@ public class SmarterPlayerDirk extends PlayerDirk {
 
         return walls.entrySet().stream()
                 .filter(entry -> !entry.getKey().isClosed())
-                .max((e1, e2) -> e1.getValue().compareTo(e2.getValue()))
+                .max(Map.Entry.comparingByValue())
                 .map(Map.Entry::getKey)
                 .orElse(null);
     }
@@ -63,6 +63,6 @@ public class SmarterPlayerDirk extends PlayerDirk {
 
     @Override
     public String getName() {
-        return "Smarter Dirk";
+        return "Ṩmarter Dirk";
     }
 }
