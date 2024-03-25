@@ -47,6 +47,42 @@ public class PlayerJan implements Player {
                 }
             }
         }
+        for (int y = 0; y < squares[0].length; y++){
+            for (int x = 0; x < squares.length; x++){        
+                if(squares[x][y].closedWalls() < 2){
+                    if(squares[x][y].getLeftWall().isClosed() == false){
+                        return squares[x][y].getLeftWall();
+                    }
+                    else if(squares[x][y].getUpperWall().isClosed() == false){
+                        return squares[x][y].getUpperWall();
+                    }
+                    else if(squares[x][y].getRightWall().isClosed() == false){
+                        return squares[x][y].getRightWall();
+                    }
+                    else if(squares[x][y].getBottomWall().isClosed() == false){
+                        return squares[x][y].getBottomWall();
+                    }
+                }
+            }
+        }
+        for (int y = 0; y < squares[0].length; y++){
+            for (int x = 0; x < squares.length; x++){        
+                    if(squares[x][y].getLeftWall().isClosed() == false){
+                        return squares[x][y].getLeftWall();
+                    }
+                    else if(squares[x][y].getUpperWall().isClosed() == false){
+                        return squares[x][y].getUpperWall();
+                    }
+                    else if(squares[x][y].getRightWall().isClosed() == false){
+                        return squares[x][y].getRightWall();
+                    }
+                    else if(squares[x][y].getBottomWall().isClosed() == false){
+                        return squares[x][y].getBottomWall();
+                    }
+            }
+        }
+
+        
         return null;
     }
 
