@@ -29,6 +29,11 @@ public class Field extends JComponent {
     }
 
 
+    public List<Square> getSquares() {
+        return Arrays.stream(this.squares)
+                .flatMap(Arrays::stream)
+                .toList();
+    }
     private Map<Wall, List<Square>> walls = new HashMap<>();
 
     public Field(int countX, int countY) {
