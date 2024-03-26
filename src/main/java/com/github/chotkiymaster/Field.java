@@ -14,11 +14,20 @@ public class Field extends JComponent {
     public static final int GAP_BETWEEN_SQUARES = -2;
     public static final int OUTER_BORDER = 3;
 
-    public Square[][] getSquares() {
-        return squares;
+    public Square getSquare(int x, int y) {
+        return squares[x][y];
     }
 
     private Square[][] squares;
+
+    public int getXDimension(){
+        return this.squares.length;
+    }
+
+    public int getYDimension(){
+        return this.squares[0].length;
+    }
+
 
     private Map<Wall, List<Square>> walls = new HashMap<>();
 
@@ -41,18 +50,18 @@ public class Field extends JComponent {
                 );
                 
                 if(x > 0){
-                    this.walls.put(squares[x][y].getLeftWall(), List.of(this.squares[x][y], this.squares[x-1][y]));
+                    this.walls.put(getSquare(x, y).getLeftWall(), List.of(this.squares[x][y], this.squares[x-1][y]));
                 }
                 else{
-                    this.walls.put(squares[x][y].getLeftWall(), List.of(this.squares[x][y]));
+                    this.walls.put(getSquare(x, y).getLeftWall(), List.of(this.squares[x][y]));
                 }
-                this.walls.put(squares[x][y].getUpperWall(), List.of(this.squares[x][y]));
-                this.walls.put(squares[x][y].getRightWall(), List.of(this.squares[x][y]));
+                this.walls.put(getSquare(x, y).getUpperWall(), List.of(this.squares[x][y]));
+                this.walls.put(getSquare(x, y).getRightWall(), List.of(this.squares[x][y]));
                 if(y > 0){
-                    this.walls.put(squares[x][y].getBottomWall(), List.of(this.squares[x][y], this.squares[x][y-1]));
+                    this.walls.put(getSquare(x, y).getBottomWall(), List.of(this.squares[x][y], this.squares[x][y-1]));
                 }
                 else{
-                    this.walls.put(squares[x][y].getBottomWall(), List.of(this.squares[x][y]));
+                    this.walls.put(getSquare(x, y).getBottomWall(), List.of(this.squares[x][y]));
                 }
                 
                 /*this.squares[x][y] = new Square(walls[0], walls[1], walls[2], walls[3]);
@@ -82,9 +91,9 @@ public class Field extends JComponent {
 
 
     public boolean isEnd() {
-        for (int y = 0; y < this.squares[0].length; y++){
-            for (int x = 0; x < this.squares.length; x++){
-                if(!squares[x][y].isClosed()){
+        for (int y = 0; y < getYDimension(); y++){
+            for (int x = 0; x < getXDimension(); x++){
+                if(!getSquare(x, y).isClosed()){
                     return false;
                 }
             }
@@ -101,12 +110,12 @@ public class Field extends JComponent {
             return false;
         }
         if (that instanceof Field thatField) {
-            if (this.getSquares().length != thatField.squares.length || this.squares[0].length != thatField.squares[0].length) {
+            if (getXDimension() != thatField.squares.length || getYDimension() != thatField.squares[0].length) {
                 return false;
             }
-            for (int y = 0; y < this.squares[0].length; y++) {
-                for (int x = 0; x < this.squares.length; x++) {
-                    if (!(this.getSquares()[x][y] == null ? thatField.getSquares()[x][y] == null : this.getSquares()[x][y].equals(thatField.getSquares()[x][y]))) {
+            for (int y = 0; y < getYDimension(); y++) {
+                for (int x = 0; x < getXDimension(); x++) {
+                    if (!(this.getSquare(x,y) == null ? thatField.getSquare(x,y) == null : this.getSquare(x,y).equals(thatField.getSquare(x,y)))) {
                         return false;
                     }
                 }
@@ -119,10 +128,10 @@ public class Field extends JComponent {
     @Override
     public String toString() {
 
-        var height = this.squares[0].length;
-        var transposeSquares = new Square[height][this.squares.length];
-        for (int y = 0; y < this.squares[0].length; y++) {
-            for (int x = 0; x < this.squares.length; x++) {
+        var height = getYDimension();
+        var transposeSquares = new Square[height][getXDimension()];
+        for (int y = 0; y < getYDimension(); y++) {
+            for (int x = 0; x < getXDimension(); x++) {
                 transposeSquares[height - 1 - y][x] = this.squares[x][y];
             }
         }

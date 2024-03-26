@@ -22,14 +22,16 @@ public class SmarterPlayerDirk extends PlayerDirk {
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
 
         Map<Wall, WallValue> walls = new HashMap<>();
-        Square[][] squares = field.getSquares();
-        for (int y = 0; y < squares[0].length; y++) {
-            for (int x = 0; x < squares.length; x++) {
+        //Square[][] squares = field.getSquares();
+        int getXDimension = field.getXDimension();
+        int getYDimension = field.getYDimension();
+        for (int y = 0; y < getYDimension; y++) {
+            for (int x = 0; x < getXDimension; x++) {
                 if (x > 0) {
-                    walls.put(squares[x][y].getLeftWall(), getValue(squareToCount, squares[x - 1][y], squares[x][y]));
+                    walls.put(field.getSquare(x, y).getLeftWall(), getValue(squareToCount, field.getSquare(x-1, y), field.getSquare(x, y)));
                 }
                if (y > 0) {
-                   walls.put(squares[x][y].getBottomWall(), getValue(squareToCount, squares[x][y - 1], squares[x][y]));
+                   walls.put(field.getSquare(x, y).getBottomWall(), getValue(squareToCount, field.getSquare(x, y-1), field.getSquare(x, y)));
                }
             }
         }

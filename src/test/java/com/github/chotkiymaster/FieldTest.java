@@ -16,23 +16,24 @@ class FieldTest {
     @Test
     void testConstructor() {
         Field fieldToTest = new Field(14, 17);
+        
+        //Square[][] squares = fieldToTest.getSquares();
 
-        Square[][] squares = fieldToTest.getSquares();
-        int countX = squares.length;
-        int countY = squares[0].length;
+        int getXDimension = fieldToTest.getXDimension();
+        int getYDimension = fieldToTest.getYDimension();
 
-        for (int y = 0; y < countY; y++) {
-            for (int x = 0; x < countX; x++) {
+        for (int y = 0; y < getYDimension; y++) {
+            for (int x = 0; x < getXDimension; x++) {
                 if (hasRightNeighbour(x, squares)) {
-                    assertThat(String.format("square[%d][%d] and square[%d][%d] should share the wall between", x, y, x + 1, y), squares[x][y].getRightWall(), sameInstance(squares[x + 1][y].getLeftWall()));
+                    assertThat(String.format("square[%d][%d] and square[%d][%d] should share the wall between", x, y, x + 1, y), fieldToTest.getSquare(x, y).getRightWall(), sameInstance(fieldToTest.getSquare(x+1, y).getLeftWall()));
                 }
                 if (hasUpperNeighbour(y, squares)) {
-                    assertThat(String.format("square[%d][%d] and square[%d][%d] should share the wall between", x, y, x, y + 1), squares[x][y].getUpperWall(), sameInstance(squares[x][y + 1].getBottomWall()));
+                    assertThat(String.format("square[%d][%d] and square[%d][%d] should share the wall between", x, y, x, y + 1), fieldToTest.getSquare(x, y).getUpperWall(), sameInstance(fieldToTest.getSquare(x, y+1).getBottomWall()));
                 }
-                assertThat(String.format("square[%d][%d] should%s have left wall closed", x, y, isLeftMost(x, y, squares) ? "": " not"), squares[x][y].getLeftWall().isClosed(), equalTo(isLeftMost(x, y, squares)));
-                assertThat(String.format("square[%d][%d] should%s have right wall closed", x, y, isRightMost(x, y, squares) ? "": " not"), squares[x][y].getRightWall().isClosed(), equalTo(isRightMost(x, y, squares)));
-                assertThat(String.format("square[%d][%d] should%s have upper wall closed", x, y, isUpMost(x, y, squares) ? "": " not"), squares[x][y].getUpperWall().isClosed(), equalTo(isUpMost(x, y, squares)));
-                assertThat(String.format("square[%d][%d] should%s have bottom wall closed", x, y, isDownMost(x, y, squares) ? "": " not"), squares[x][y].getBottomWall().isClosed(), equalTo(isDownMost(x, y, squares)));
+                assertThat(String.format("square[%d][%d] should%s have left wall closed", x, y, isLeftMost(x, y, squares) ? "": " not"), fieldToTest.getSquare(x, y).getLeftWall().isClosed(), equalTo(isLeftMost(x, y, squares)));
+                assertThat(String.format("square[%d][%d] should%s have right wall closed", x, y, isRightMost(x, y, squares) ? "": " not"), fieldToTest.getSquare(x, y).getRightWall().isClosed(), equalTo(isRightMost(x, y, squares)));
+                assertThat(String.format("square[%d][%d] should%s have upper wall closed", x, y, isUpMost(x, y, squares) ? "": " not"), fieldToTest.getSquare(x, y).getUpperWall().isClosed(), equalTo(isUpMost(x, y, squares)));
+                assertThat(String.format("square[%d][%d] should%s have bottom wall closed", x, y, isDownMost(x, y, squares) ? "": " not"), fieldToTest.getSquare(x, y).getBottomWall().isClosed(), equalTo(isDownMost(x, y, squares)));
             }
         }
     }
