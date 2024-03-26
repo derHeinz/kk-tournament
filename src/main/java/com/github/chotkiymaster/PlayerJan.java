@@ -84,11 +84,11 @@ public class PlayerJan implements Player {
             }
         }
         
-        Field virtualField = field;
-        return virtualstep(virtualField);
+        //Field virtualField = field;
+        //return virtualstep(virtualField);
 
         
-        //return null;
+        return null;
     }
 
     private Wall virtualstep(Field field){

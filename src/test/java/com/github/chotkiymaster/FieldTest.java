@@ -3,9 +3,6 @@ package com.github.chotkiymaster;
 import org.junit.jupiter.api.Test;
 
 
-import javax.swing.*;
-
-import java.awt.*;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
@@ -24,16 +21,16 @@ class FieldTest {
 
         for (int y = 0; y < getYDimension; y++) {
             for (int x = 0; x < getXDimension; x++) {
-                if (hasRightNeighbour(x, squares)) {
+                if (hasRightNeighbour(x, getXDimension)) {
                     assertThat(String.format("square[%d][%d] and square[%d][%d] should share the wall between", x, y, x + 1, y), fieldToTest.getSquare(x, y).getRightWall(), sameInstance(fieldToTest.getSquare(x+1, y).getLeftWall()));
                 }
-                if (hasUpperNeighbour(y, squares)) {
+                if (hasUpperNeighbour(y, getYDimension)) {
                     assertThat(String.format("square[%d][%d] and square[%d][%d] should share the wall between", x, y, x, y + 1), fieldToTest.getSquare(x, y).getUpperWall(), sameInstance(fieldToTest.getSquare(x, y+1).getBottomWall()));
                 }
-                assertThat(String.format("square[%d][%d] should%s have left wall closed", x, y, isLeftMost(x, y, squares) ? "": " not"), fieldToTest.getSquare(x, y).getLeftWall().isClosed(), equalTo(isLeftMost(x, y, squares)));
-                assertThat(String.format("square[%d][%d] should%s have right wall closed", x, y, isRightMost(x, y, squares) ? "": " not"), fieldToTest.getSquare(x, y).getRightWall().isClosed(), equalTo(isRightMost(x, y, squares)));
-                assertThat(String.format("square[%d][%d] should%s have upper wall closed", x, y, isUpMost(x, y, squares) ? "": " not"), fieldToTest.getSquare(x, y).getUpperWall().isClosed(), equalTo(isUpMost(x, y, squares)));
-                assertThat(String.format("square[%d][%d] should%s have bottom wall closed", x, y, isDownMost(x, y, squares) ? "": " not"), fieldToTest.getSquare(x, y).getBottomWall().isClosed(), equalTo(isDownMost(x, y, squares)));
+                assertThat(String.format("square[%d][%d] should%s have left wall closed", x, y, isLeftMost(x, y, getXDimension) ? "": " not"), fieldToTest.getSquare(x, y).getLeftWall().isClosed(), equalTo(isLeftMost(x, y, getXDimension)));
+                assertThat(String.format("square[%d][%d] should%s have right wall closed", x, y, isRightMost(x, y, getXDimension) ? "": " not"), fieldToTest.getSquare(x, y).getRightWall().isClosed(), equalTo(isRightMost(x, y, getXDimension)));
+                assertThat(String.format("square[%d][%d] should%s have upper wall closed", x, y, isUpMost(x, y, getYDimension) ? "": " not"), fieldToTest.getSquare(x, y).getUpperWall().isClosed(), equalTo(isUpMost(x, y, getYDimension)));
+                assertThat(String.format("square[%d][%d] should%s have bottom wall closed", x, y, isDownMost(x, y, getYDimension) ? "": " not"), fieldToTest.getSquare(x, y).getBottomWall().isClosed(), equalTo(isDownMost(x, y, getYDimension)));
             }
         }
     }
@@ -45,28 +42,28 @@ class FieldTest {
         assertThat(new Field(1, 2).toString(), equalTo(String.format("{%n[{R: 1, U: 1, L: 1, B: 0}],%n[{R: 1, U: 0, L: 1, B: 1}]%n}")));
     }
 
-    private boolean isLeftMost(int x, int y, Square[][] squares) {
+    private boolean isLeftMost(int x, int y, int getXDimension) {
         return x == 0;
     }
 
-    private boolean isRightMost(int x, int y, Square[][] squares) {
-        return x + 1 == squares.length;
+    private boolean isRightMost(int x, int y, int getXDimension) {
+        return x + 1 == getXDimension;
     }
 
-    private boolean isUpMost(int x, int y, Square[][] squares) {
-        return y + 1 == squares[0].length;
+    private boolean isUpMost(int x, int y, int getYDimension) {
+        return y + 1 == getYDimension;
     }
 
-    private boolean isDownMost(int x, int y, Square[][] squares) {
+    private boolean isDownMost(int x, int y, int getYDimension) {
         return y == 0;
     }
 
-    private boolean hasRightNeighbour(int x, Square[][] squares) {
-        return squares.length > x + 1;
+    private boolean hasRightNeighbour(int x, int getXDimension) {
+        return getXDimension > x + 1;
     }
 
-    private boolean hasUpperNeighbour(int y, Square[][] squares) {
-        return squares[0].length > y + 1;
+    private boolean hasUpperNeighbour(int y, int getYDimension) {
+        return getYDimension > y + 1;
     }
 
     
