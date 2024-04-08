@@ -56,7 +56,11 @@ public class Square {
     }
 
     
-    
+    public List<Wall> getWalls() {
+        return List.of(this.getLeftWall(), this.getUpperWall(), this.getRightWall(), this.getBottomWall())
+                .stream()
+                .toList();
+    }
 
 
     public boolean isClosed() {

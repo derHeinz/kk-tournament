@@ -1,14 +1,25 @@
 package com.github.chotkiymaster;
 
+import java.util.LinkedList;
+
 public class PlayerJan implements Player {
 
     
 
     @Override
     public Wall step(Field field) {
-        //TODO: 3rd step
 
-        //???   Square square = field.getSquare();   ???
+        Wall result = oneOpen(field);
+        if(result == null){
+            result = safeThreeOpen(field);
+        }
+        if(result == null){
+            result = unsafe(field);
+        }
+        return result;
+    }
+
+    protected Wall oneOpen(Field field){
         int getXDimension = field.getXDimension();
         int getYDimension = field.getYDimension();
 
@@ -29,8 +40,14 @@ public class PlayerJan implements Player {
                     }
                 }
             }
-        }        
-                
+        }
+        return null;
+    }
+
+    protected Wall safeThreeOpen(Field field){
+        int getXDimension = field.getXDimension();
+        int getYDimension = field.getYDimension();
+
         for (int y = 0; y < getYDimension; y++){
             for (int x = 0; x < getXDimension; x++){        
                 if(field.getSquare(x,y).closedWalls() < 2){
@@ -49,8 +66,15 @@ public class PlayerJan implements Player {
                 }
             }
         }
+        return null;
+    }
+
+    protected Wall unsafe(Field field){
+        int getXDimension = field.getXDimension();
+        int getYDimension = field.getYDimension();
+
         for (int y = 0; y < getYDimension; y++){
-            for (int x = 0; x < getXDimension; x++){        
+            for (int x = 0; x < getXDimension; x++){
                 if(field.getSquare(x,y).closedWalls() < 2){
                     if(field.getSquare(x,y).getLeftWall().isClosed() == false){
                         return field.getSquare(x,y).getLeftWall();
@@ -67,6 +91,7 @@ public class PlayerJan implements Player {
                 }
             }
         }
+
         for (int y = 0; y < getYDimension; y++){
             for (int x = 0; x < getXDimension; x++){        
                     if(field.getSquare(x,y).getLeftWall().isClosed() == false){
@@ -83,26 +108,12 @@ public class PlayerJan implements Player {
                     }
             }
         }
-        
-        //Field virtualField = field;
-        //return virtualstep(virtualField);
-
-        
         return null;
     }
 
-    private Wall virtualstep(Field field){
 
-        Integer vpoints1 = 0;
-        if(field.getSquare(0,0).getUpperWall().isClosed() == false){
-            field.getSquare(0,0).getUpperWall().setClosed(true);
-        }
-        else if(field.getSquare(0,0).getRightWall().isClosed() == false){
-            field.getSquare(0,0).getRightWall().setClosed(true);
-        }
-        
-        return null;
-    }
+
+
 
     public void so(){}
 

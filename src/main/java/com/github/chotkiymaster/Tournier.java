@@ -1,13 +1,13 @@
 package com.github.chotkiymaster;
 
 public class Tournier {
-    private Player[] players = new Player[]{new PlayerJan(), new PlayerDirk(), new SmarterPlayerDirk()};
+    private Player[] players = new Player[]{new PlayerJan(), new GenieJan(), new SmarterPlayerDirk()};
 
     public void start(){
         for(int x = 0; x < 1 ; x++){
-            new Match(players[0],players[1], new Field(15, 23)).start();
+            new Match(players[1],players[0], new Field(10, 5)).start();
             new Match(players[0],players[2], new Field(15, 23)).start();
-            new Match(players[1],players[2], new Field(15, 23)).start();
+            new Match(players[1],players[2], new Field(3, 9)).start();
         }
     }
     
