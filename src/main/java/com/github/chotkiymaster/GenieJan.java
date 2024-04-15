@@ -30,8 +30,7 @@ public class GenieJan extends PlayerJan {
 
     @Override
     protected Wall unsafe(Field field){ //???
-        int getXDimension = field.getXDimension();
-        int getYDimension = field.getYDimension();
+
         LinkedList<List<Wall>> rooms = new LinkedList<>();
         
         var squaresOf3 = field.getSquares()
@@ -52,11 +51,20 @@ public class GenieJan extends PlayerJan {
             }
         }
 
+        LinkedList<Square> listss = new LinkedList<>();
+        for(List<Wall> room: rooms){
+            for(Wall wall: room){
+                for(Square square: field.getNeighbours(wall)){
+                    if(!listss.contains(square)) listss.add(square);
+                }
+            }
+        }
 
         var squaresOf2 = field.getSquares()
                 .stream()
-                .filter(square -> square.closedWalls() == 2 && rooms.stream().anyMatch(room -> room.stream().anyMatch(wall -> field.getNeighbours(wall).contains(square))) == false)
+                .filter(square -> square.closedWalls() == 2 /*&& rooms.stream().anyMatch(room -> room.stream().anyMatch(wall -> field.getNeighbours(wall).contains(square))) == false*/ && !listss.contains(square))
                 .toList();
+
 
         for(Square square: squaresOf2){
             var wallsOf2Square = square.getWalls()
@@ -70,7 +78,6 @@ public class GenieJan extends PlayerJan {
                 rooms.add(getChain(currentSquare, currentWall, currentSquare, currentWall, field));
             }
         }
-
 
         return rooms
         .stream()

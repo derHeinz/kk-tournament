@@ -5,9 +5,9 @@ public class Tournier {
 
     public void start(){
         for(int x = 0; x < 1 ; x++){
-            new Match(players[1],players[0], new Field(10, 5)).start();
-            new Match(players[0],players[2], new Field(15, 23)).start();
-            new Match(players[1],players[2], new Field(3, 9)).start();
+            new Match(players[1],players[0], new Field(5, 5)).start();
+            new Match(players[0],players[2], new Field(5, 5)).start();
+            new Match(players[1],players[2], new Field(5, 5)).start();
         }
     }
     
