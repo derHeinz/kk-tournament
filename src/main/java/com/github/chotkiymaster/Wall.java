@@ -15,8 +15,7 @@ public class Wall {
         this.closed = closed;
     }
 
-    @Override
-    public boolean equals(Object that) {
+    public boolean equalStateWith(Object that) {
         if (this == that) {
             return true;
         }

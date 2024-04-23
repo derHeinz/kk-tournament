@@ -121,7 +121,7 @@ public class Field extends JComponent {
             }
             for (int y = 0; y < getYDimension(); y++) {
                 for (int x = 0; x < getXDimension(); x++) {
-                    if (!(this.getSquare(x,y) == null ? thatField.getSquare(x,y) == null : this.getSquare(x,y).equals(thatField.getSquare(x,y)))) {
+                    if (!(this.getSquare(x,y) == null ? thatField.getSquare(x,y) == null : this.getSquare(x,y).equalStateWith(thatField.getSquare(x,y)))) {
                         return false;
                     }
                 }

@@ -14,7 +14,7 @@ public class GenieJan extends PlayerJan {
                         .orElse(null);
         if((nextSquare.closedWalls() == 2 && nextSquare != startSquare) || (nextSquare.closedWalls() == 1 && nextSquare == startSquare)){
 
-        Wall nextWall = nextSquare.getWalls() //Ist das richtig?
+        Wall nextWall = nextSquare.getWalls()
                     .stream()
                     .filter(nextwall -> nextwall.isClosed() == false && nextwall != wall && nextwall != startWall)
                     .findFirst()
@@ -29,7 +29,7 @@ public class GenieJan extends PlayerJan {
 
 
     @Override
-    protected Wall unsafe(Field field){ //???
+    protected Wall unsafe(Field field){
 
         LinkedList<List<Wall>> rooms = new LinkedList<>();
         

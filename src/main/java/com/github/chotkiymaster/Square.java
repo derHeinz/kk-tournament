@@ -86,8 +86,7 @@ public class Square {
         );
     }
 
-    @Override
-    public boolean equals(Object that) {
+    public boolean equalStateWith(Object that) {
         if (this == that) {
             return true;
         }
@@ -95,10 +94,10 @@ public class Square {
             return false;
         }
         if (that instanceof Square thatSquare) {
-            return (Objects.equals(this.rightWall, thatSquare.rightWall))
-                    && (Objects.equals(this.upperWall, thatSquare.upperWall))
-                    && (Objects.equals(this.leftWall, thatSquare.leftWall))
-                    && (Objects.equals(this.bottomWall, thatSquare.bottomWall));
+            return this.rightWall.equalStateWith(thatSquare.rightWall)
+                    && this.upperWall.equalStateWith(thatSquare.upperWall)
+                    && this.leftWall.equalStateWith(thatSquare.leftWall)
+                    && this.bottomWall.equalStateWith(thatSquare.bottomWall);
         }
         return false;
     }
