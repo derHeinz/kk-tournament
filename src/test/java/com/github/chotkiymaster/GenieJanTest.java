@@ -5,7 +5,9 @@ import org.junit.jupiter.api.Test;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.either;
 import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.notNullValue;
+import static org.hamcrest.Matchers.oneOf;
 import static org.hamcrest.Matchers.sameInstance;
 
 class GenieJanTest extends AbstractPlayerTest {
@@ -14,6 +16,7 @@ class GenieJanTest extends AbstractPlayerTest {
     Player getPlayer() {
         return new GenieJan();
     }
+    
     @Test
     void testMinimumField() {
         var playerUnderTest = getPlayer();
@@ -106,7 +109,6 @@ class GenieJanTest extends AbstractPlayerTest {
             assertThat("each step must return a wall, except match is finished", wall, notNullValue());
             assertThat("returned wall has to be open", wall.isClosed(), equalTo(false));
             assertThat(wall, either(sameInstance(expectedStep)).or(sameInstance(expectedAltStep)));
-            wall.setClosed(true);
 
     }
 
@@ -141,5 +143,49 @@ class GenieJanTest extends AbstractPlayerTest {
             assertThat(wall, either(sameInstance(expectedStep1Square)).or(sameInstance(expectedAltStep1Square)).or(sameInstance(expectedStep2Square)).or(sameInstance(expectedAltStep2Square)));
             wall.setClosed(true);
 
+    }
+
+    @Test
+    void testExactField() {
+
+        var playerUnderTest = getPlayer();
+        var field = new Field(5, 5);
+        field.getSquare(1, 0).getUpperWall().setClosed(true);
+        field.getSquare(2, 0).getRightWall().setClosed(true);
+        field.getSquare(0, 1).getUpperWall().setClosed(true);
+        field.getSquare(1, 1).getUpperWall().setClosed(true);
+        field.getSquare(2, 1).getUpperWall().setClosed(true);
+        field.getSquare(2, 1).getRightWall().setClosed(true);
+        field.getSquare(3, 1).getUpperWall().setClosed(true);
+        field.getSquare(4, 1).getUpperWall().setClosed(true);
+        field.getSquare(1, 2).getUpperWall().setClosed(true);
+        field.getSquare(2, 2).getRightWall().setClosed(true);
+        field.getSquare(1, 3).getRightWall().setClosed(true);
+        field.getSquare(2, 3).getRightWall().setClosed(true);
+        field.getSquare(3, 3).getUpperWall().setClosed(true);
+        field.getSquare(1, 4).getRightWall().setClosed(true);
+        var expected1Wall = field.getSquare(3, 0).getRightWall();
+        var expected2Wall = field.getSquare(3, 1).getRightWall();
+        var expected3Wall = field.getSquare(3, 1).getBottomWall();
+        var expected4Wall = field.getSquare(4, 1).getBottomWall();
+
+        var wrongWall = field.getSquare(0, 3).getBottomWall();
+        var wrongAltWall = field.getSquare(4, 3).getUpperWall();
+
+            var wall = playerUnderTest.step(field);
+            assertThat("each step must return a wall, except match is finished", wall, notNullValue());
+            assertThat("returned wall has to be open", wall.isClosed(), equalTo(false));
+            assertThat(wall, not(oneOf(equalTo(wrongWall), equalTo(wrongAltWall))));
+            assertThat(wall, either(equalTo(expected1Wall)).or(equalTo(expected2Wall)).or(equalTo(expected3Wall)).or(equalTo(expected4Wall)));
+            
+
+    }
+
+    @Test
+    void testName(){
+        var playerUnderTest = getPlayer();
+        var name = playerUnderTest.getName();
+
+        assertThat(name, equalTo("GenieJan"));
     }
 }
