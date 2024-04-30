@@ -1,34 +1,15 @@
 package com.github.chotkiymaster;
 
-import java.util.Comparator;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Stream;
 
-public class StepGenieJan extends StepJan {
-    private List<List<Wall>> rooms;
+public class StepGenieJan {
     public Set<Square> squaresInChains = new HashSet<>();
-
-    public StepGenieJan(Field field) {
-        super(field);
-    }
-
-    /**
-     * Wählt eine Wand für ein unsafe step().
-     * @return Erste Wand aus der kleinsten Liste von Ketten
-     */
-    @Override
-    protected Wall unsafe(Field field) {
-        init();
-        return this.rooms
-                .stream()
-                .min(Comparator.comparing(List::size))
-                .orElse(List.of())
-                .stream()
-                .findFirst()
-                .orElse(null);
+    private Field field;
+    public StepGenieJan(Field field){
+        this.field = field;
     }
 
     /**
@@ -48,14 +29,6 @@ public class StepGenieJan extends StepJan {
     public List<List<Wall>> getRoomsOf2() {
         var squaresOf2 = getSquaresOfX(2);// Or move it to for-loop without variable?
         return getRooms(squaresOf2, 2);
-    }
-
-    /**
-     * Sammelt alle Ketten durch Aufrufen von "getRoomsOf3" und "getRoomsOf2"
-     */
-    public void init() { //umbenennen?
-        this.rooms = Stream.concat(getRoomsOf3().stream(), getRoomsOf2().stream())
-                .toList();
     }
 
     /**
