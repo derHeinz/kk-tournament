@@ -1,7 +1,8 @@
 package com.github.chotkiymaster;
 
-import java.util.LinkedList;
-
+/**
+ * Implemetierung
+ */
 public class PlayerJan implements Player {
 
     
@@ -18,7 +19,11 @@ public class PlayerJan implements Player {
         }
         return result;
     }
-
+/**
+ * anderes text
+ * @param field text
+ * @return wall
+ */
     protected Wall oneOpen(Field field){
         int getXDimension = field.getXDimension();
         int getYDimension = field.getYDimension();
@@ -26,13 +31,13 @@ public class PlayerJan implements Player {
         for (int y = 0; y < getYDimension; y++){
             for (int x = 0; x < getXDimension; x++){
                 if(field.getSquare(x,y).closedWalls() == 3){
-                    if(field.getSquare(x,y).getLeftWall().isClosed() == false){
+                    if(!field.getSquare(x,y).getLeftWall().isClosed()){
                         return field.getSquare(x,y).getLeftWall();
                     }
-                    else if(field.getSquare(x,y).getUpperWall().isClosed() == false){
+                    else if(!field.getSquare(x,y).getUpperWall().isClosed()){
                         return field.getSquare(x,y).getUpperWall();
                     }
-                    else if(field.getSquare(x,y).getRightWall().isClosed() == false){
+                    else if(!field.getSquare(x,y).getRightWall().isClosed()){
                         return field.getSquare(x,y).getRightWall();
                     }
                     else{
@@ -51,16 +56,16 @@ public class PlayerJan implements Player {
         for (int y = 0; y < getYDimension; y++){
             for (int x = 0; x < getXDimension; x++){        
                 if(field.getSquare(x,y).closedWalls() < 2){
-                    if(field.getSquare(x,y).getLeftWall().isClosed() == false && field.getSquare(x-1,y).closedWalls() < 2){
+                    if(!field.getSquare(x,y).getLeftWall().isClosed() && field.getSquare(x-1,y).closedWalls() < 2){
                         return field.getSquare(x,y).getLeftWall();
                     }
-                    else if(field.getSquare(x,y).getUpperWall().isClosed() == false && field.getSquare(x,y+1).closedWalls() < 2){
+                    else if(!field.getSquare(x,y).getUpperWall().isClosed() && field.getSquare(x,y+1).closedWalls() < 2){
                         return field.getSquare(x,y).getUpperWall();
                     }
-                    else if(field.getSquare(x,y).getRightWall().isClosed() == false && field.getSquare(x+1,y).closedWalls() < 2){
+                    else if(!field.getSquare(x,y).getRightWall().isClosed() && field.getSquare(x+1,y).closedWalls() < 2){
                         return field.getSquare(x,y).getRightWall();
                     }
-                    else if(field.getSquare(x,y).getBottomWall().isClosed() == false && field.getSquare(x,y-1).closedWalls() < 2){
+                    else if(!field.getSquare(x,y).getBottomWall().isClosed() && field.getSquare(x,y-1).closedWalls() < 2){
                         return field.getSquare(x,y).getBottomWall();
                     }
                 }
@@ -76,16 +81,16 @@ public class PlayerJan implements Player {
         for (int y = 0; y < getYDimension; y++){
             for (int x = 0; x < getXDimension; x++){
                 if(field.getSquare(x,y).closedWalls() < 2){
-                    if(field.getSquare(x,y).getLeftWall().isClosed() == false){
+                    if(!field.getSquare(x,y).getLeftWall().isClosed()){
                         return field.getSquare(x,y).getLeftWall();
                     }
-                    else if(field.getSquare(x,y).getUpperWall().isClosed() == false){
+                    else if(!field.getSquare(x,y).getUpperWall().isClosed()){
                         return field.getSquare(x,y).getUpperWall();
                     }
-                    else if(field.getSquare(x,y).getRightWall().isClosed() == false){
+                    else if(!field.getSquare(x,y).getRightWall().isClosed()){
                         return field.getSquare(x,y).getRightWall();
                     }
-                    else if(field.getSquare(x,y).getBottomWall().isClosed() == false){
+                    else if(!field.getSquare(x,y).getBottomWall().isClosed()){
                         return field.getSquare(x,y).getBottomWall();
                     }
                 }
@@ -94,16 +99,16 @@ public class PlayerJan implements Player {
 
         for (int y = 0; y < getYDimension; y++){
             for (int x = 0; x < getXDimension; x++){        
-                    if(field.getSquare(x,y).getLeftWall().isClosed() == false){
+                    if(!field.getSquare(x,y).getLeftWall().isClosed()){
                         return field.getSquare(x,y).getLeftWall();
                     }
-                    else if(field.getSquare(x,y).getUpperWall().isClosed() == false){
+                    else if(!field.getSquare(x,y).getUpperWall().isClosed()){
                         return field.getSquare(x,y).getUpperWall();
                     }
-                    else if(field.getSquare(x,y).getRightWall().isClosed() == false){
+                    else if(!field.getSquare(x,y).getRightWall().isClosed()){
                         return field.getSquare(x,y).getRightWall();
                     }
-                    else if(field.getSquare(x,y).getBottomWall().isClosed() == false){
+                    else if(!field.getSquare(x,y).getBottomWall().isClosed()){
                         return field.getSquare(x,y).getBottomWall();
                     }
             }
@@ -111,11 +116,6 @@ public class PlayerJan implements Player {
         return null;
     }
 
-
-
-
-
-    public void so(){}
 
     @Override
     public String getName() {

@@ -18,7 +18,6 @@ class GenieJanTest extends AbstractPlayerTest {
     void testMinimumField() {
         var playerUnderTest = getPlayer();
         var field = new Field(2, 2);
-        var expectedField = TestHelper.createCloseField(2, 2);
 
             var wall = playerUnderTest.step(field);
             assertThat("each step must return a wall, except match is finished", wall, notNullValue());
@@ -32,7 +31,6 @@ class GenieJanTest extends AbstractPlayerTest {
     void testUnsafe() {
         var playerUnderTest = new Wrap();
         var field = new Field(2, 2);
-        var expectedField = TestHelper.createCloseField(2, 2);
 
             var wall = playerUnderTest.unsafe(field);
             assertThat("each step must return a wall, except match is finished", wall, notNullValue());
@@ -132,8 +130,8 @@ class GenieJanTest extends AbstractPlayerTest {
         field.getSquare(1, 4).getRightWall().setClosed(true);
 
         var expectedStep1Square = field.getSquare(3, 0).getRightWall();
-        var expectedAltStep1Square = field.getSquare(3, 0).getRightWall();
-        var expectedStep2Square = field.getSquare(4, 1).getBottomWall();
+        var expectedAltStep1Square = field.getSquare(3, 1).getRightWall();
+        var expectedStep2Square = field.getSquare(3, 1).getBottomWall();
         var expectedAltStep2Square = field.getSquare(4, 1).getBottomWall();
 
 

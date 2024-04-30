@@ -8,19 +8,18 @@ import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.Matchers.sameInstance;
 
 import java.util.LinkedList;
-import java.util.List;
 
 import static org.hamcrest.Matchers.either;
+import static org.hamcrest.Matchers.oneOf;
 import static org.hamcrest.Matchers.not;
 
-public class STepGenieJanTest {
+class STepGenieJanTest {
 
 
     @Test
     void testMinimumField() {
 
         var field = new Field(2, 2);
-        var expectedField = TestHelper.createCloseField(2, 2);
         var stepUnderTest = new StepGenieJan(field);
 
             var wall = stepUnderTest.step();
@@ -38,7 +37,7 @@ public class STepGenieJanTest {
         var stepUnderTest = new StepGenieJan(field);
             
             var list = stepUnderTest.getRoomsOf2();
-            assertThat(list, notNullValue());
+            assertThat(list.size(), equalTo(2));
     }
 
     @Test
@@ -66,7 +65,6 @@ public class STepGenieJanTest {
     void testExactField() {
 
         var field = new Field(5, 5);
-        var expectedField = TestHelper.createCloseField(5, 5);
         field.getSquare(1, 0).getUpperWall().setClosed(true);
         field.getSquare(2, 0).getRightWall().setClosed(true);
         field.getSquare(0, 1).getUpperWall().setClosed(true);
@@ -82,31 +80,29 @@ public class STepGenieJanTest {
         field.getSquare(3, 3).getUpperWall().setClosed(true);
         field.getSquare(1, 4).getRightWall().setClosed(true);
 
-        var expectedStep1Square = field.getSquare(3, 0).getRightWall();
-        var expectedAltStep1Square = field.getSquare(3, 1).getRightWall();
-        var expectedStep2Square = field.getSquare(3, 1).getBottomWall();
-        var expectedAltStep2Square = field.getSquare(4, 1).getBottomWall();
+        var expected1Wall = field.getSquare(3, 0).getRightWall();
+        var expected2Wall = field.getSquare(3, 1).getRightWall();
+        var expected3Wall = field.getSquare(3, 1).getBottomWall();
+        var expected4Wall = field.getSquare(4, 1).getBottomWall();
 
-        var wrongStep = field.getSquare(0, 3).getBottomWall();
-        var wrongAltStep = field.getSquare(4, 3).getUpperWall();
+        var wrongWall = field.getSquare(0, 3).getBottomWall();
+        var wrongAltWall = field.getSquare(4, 3).getUpperWall();
         var stepUnderTest = new StepGenieJan(field);
 
             var wall = stepUnderTest.step();
             assertThat("each step must return a wall, except match is finished", wall, notNullValue());
             assertThat("returned wall has to be open", wall.isClosed(), equalTo(false));
-            assertThat(wall, not(either(equalTo(wrongStep)).or(equalTo(wrongAltStep))));
-            assertThat(wall, either(sameInstance(expectedStep1Square)).or(sameInstance(expectedAltStep1Square)).or(sameInstance(expectedStep2Square)).or(sameInstance(expectedAltStep2Square)));
+            assertThat(wall, not(oneOf(equalTo(wrongWall), equalTo(wrongAltWall))));
+            assertThat(wall, either(equalTo(expected1Wall)).or(equalTo(expected2Wall)).or(equalTo(expected3Wall)).or(equalTo(expected4Wall)));
             wall.setClosed(true);
             
 
-        //assertThat("all walls must be closed", field, equalTo(expectedField));
     }
 
     @Test
     void testExactField_2Rooms() {
 
         var field = new Field(5, 5);
-        var expectedField = TestHelper.createCloseField(5, 5);
         field.getSquare(1, 0).getUpperWall().setClosed(true);
         field.getSquare(2, 0).getRightWall().setClosed(true);
         field.getSquare(0, 1).getUpperWall().setClosed(true);
@@ -199,6 +195,35 @@ public class STepGenieJanTest {
             assertThat("each step must return a wall, except match is finished", wall, notNullValue());
             assertThat("returned wall has to be open", wall.isClosed(), equalTo(false));
             assertThat(wall, either(sameInstance(expectedStep)).or(sameInstance(expectedAltStep)));
+            wall.setClosed(true);
+
+    }
+
+    @Test
+    void testRedField(){
+        var field = new Field(4, 4);
+        field.getSquare(1, 1).getLeftWall().setClosed(true);
+        field.getSquare(1, 1).getUpperWall().setClosed(true);
+        field.getSquare(2, 1).getUpperWall().setClosed(true);
+        field.getSquare(2, 1).getBottomWall().setClosed(true);
+        field.getSquare(3, 1).getUpperWall().setClosed(true);
+        field.getSquare(2, 2).getLeftWall().setClosed(true);
+        field.getSquare(2, 3).getLeftWall().setClosed(true);
+        var stepUnderTest = new StepGenieJan(field);
+        var expectedStep = field.getSquare(1, 0).getLeftWall();
+        var expectedAltStep = field.getSquare(0, 2).getBottomWall();
+
+        var notExpectedStep = field.getSquare(2, 2).getUpperWall();
+        var notExpectedAltStep = field.getSquare(2, 3).getLeftWall();
+        var notExpectedAltAltStep = field.getSquare(3, 2).getRightWall();
+        var notExpectedAltAltAltStep = field.getSquare(3, 3).getBottomWall();
+
+
+            var wall = stepUnderTest.step();
+            assertThat("each step must return a wall, except match is finished", wall, notNullValue());
+            assertThat("returned wall has to be open", wall.isClosed(), equalTo(false));
+            assertThat(wall, not(either(equalTo(notExpectedAltAltAltStep)).or(equalTo(notExpectedAltAltStep)).or(equalTo(notExpectedAltStep)).or(equalTo(notExpectedStep))));
+            assertThat(wall, either(equalTo(expectedStep)).or(equalTo(expectedAltStep)));
             wall.setClosed(true);
 
     }

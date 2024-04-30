@@ -1,12 +1,11 @@
 package com.github.chotkiymaster;
 
 public class StepJan {
-    private Field field;
+    protected Field field;
     public StepJan(Field field){
         this.field = field;
     }
     public Wall step(){
-        //TODO
         Wall result = oneOpen(field);
         if(result == null){
             result = safeThreeOpen(field);
@@ -23,13 +22,13 @@ public class StepJan {
         for (int y = 0; y < getYDimension; y++){
             for (int x = 0; x < getXDimension; x++){
                 if(field.getSquare(x,y).closedWalls() == 3){
-                    if(field.getSquare(x,y).getLeftWall().isClosed() == false){
+                    if(!field.getSquare(x,y).getLeftWall().isClosed()){
                         return field.getSquare(x,y).getLeftWall();
                     }
-                    else if(field.getSquare(x,y).getUpperWall().isClosed() == false){
+                    else if(!field.getSquare(x,y).getUpperWall().isClosed()){
                         return field.getSquare(x,y).getUpperWall();
                     }
-                    else if(field.getSquare(x,y).getRightWall().isClosed() == false){
+                    else if(!field.getSquare(x,y).getRightWall().isClosed()){
                         return field.getSquare(x,y).getRightWall();
                     }
                     else{
@@ -48,16 +47,16 @@ public class StepJan {
         for (int y = 0; y < getYDimension; y++){
             for (int x = 0; x < getXDimension; x++){        
                 if(field.getSquare(x,y).closedWalls() < 2){
-                    if(field.getSquare(x,y).getLeftWall().isClosed() == false && field.getSquare(x-1,y).closedWalls() < 2){
+                    if(!field.getSquare(x,y).getLeftWall().isClosed() && field.getSquare(x-1,y).closedWalls() < 2){
                         return field.getSquare(x,y).getLeftWall();
                     }
-                    else if(field.getSquare(x,y).getUpperWall().isClosed() == false && field.getSquare(x,y+1).closedWalls() < 2){
+                    else if(!field.getSquare(x,y).getUpperWall().isClosed() && field.getSquare(x,y+1).closedWalls() < 2){
                         return field.getSquare(x,y).getUpperWall();
                     }
-                    else if(field.getSquare(x,y).getRightWall().isClosed() == false && field.getSquare(x+1,y).closedWalls() < 2){
+                    else if(!field.getSquare(x,y).getRightWall().isClosed() && field.getSquare(x+1,y).closedWalls() < 2){
                         return field.getSquare(x,y).getRightWall();
                     }
-                    else if(field.getSquare(x,y).getBottomWall().isClosed() == false && field.getSquare(x,y-1).closedWalls() < 2){
+                    else if(!field.getSquare(x,y).getBottomWall().isClosed() && field.getSquare(x,y-1).closedWalls() < 2){
                         return field.getSquare(x,y).getBottomWall();
                     }
                 }
@@ -73,16 +72,16 @@ public class StepJan {
         for (int y = 0; y < getYDimension; y++){
             for (int x = 0; x < getXDimension; x++){
                 if(field.getSquare(x,y).closedWalls() < 2){
-                    if(field.getSquare(x,y).getLeftWall().isClosed() == false){
+                    if(!field.getSquare(x,y).getLeftWall().isClosed()){
                         return field.getSquare(x,y).getLeftWall();
                     }
-                    else if(field.getSquare(x,y).getUpperWall().isClosed() == false){
+                    else if(!field.getSquare(x,y).getUpperWall().isClosed()){
                         return field.getSquare(x,y).getUpperWall();
                     }
-                    else if(field.getSquare(x,y).getRightWall().isClosed() == false){
+                    else if(!field.getSquare(x,y).getRightWall().isClosed()){
                         return field.getSquare(x,y).getRightWall();
                     }
-                    else if(field.getSquare(x,y).getBottomWall().isClosed() == false){
+                    else if(!field.getSquare(x,y).getBottomWall().isClosed()){
                         return field.getSquare(x,y).getBottomWall();
                     }
                 }
@@ -91,16 +90,16 @@ public class StepJan {
 
         for (int y = 0; y < getYDimension; y++){
             for (int x = 0; x < getXDimension; x++){        
-                    if(field.getSquare(x,y).getLeftWall().isClosed() == false){
+                    if(!field.getSquare(x,y).getLeftWall().isClosed()){
                         return field.getSquare(x,y).getLeftWall();
                     }
-                    else if(field.getSquare(x,y).getUpperWall().isClosed() == false){
+                    else if(!field.getSquare(x,y).getUpperWall().isClosed()){
                         return field.getSquare(x,y).getUpperWall();
                     }
-                    else if(field.getSquare(x,y).getRightWall().isClosed() == false){
+                    else if(!field.getSquare(x,y).getRightWall().isClosed()){
                         return field.getSquare(x,y).getRightWall();
                     }
-                    else if(field.getSquare(x,y).getBottomWall().isClosed() == false){
+                    else if(!field.getSquare(x,y).getBottomWall().isClosed()){
                         return field.getSquare(x,y).getBottomWall();
                     }
             }

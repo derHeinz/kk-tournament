@@ -23,7 +23,7 @@ public class Match {
         this.calculationTime.put(spieler1, 0L);
         this.calculationTime.put(spieler2, 0L);
 
-        field.getSquare(1, 0).getUpperWall().setClosed(true);
+        /*field.getSquare(1, 0).getUpperWall().setClosed(true);
         field.getSquare(2, 0).getRightWall().setClosed(true);
         field.getSquare(0, 1).getUpperWall().setClosed(true);
         field.getSquare(1, 1).getUpperWall().setClosed(true);
@@ -36,7 +36,7 @@ public class Match {
         field.getSquare(1, 3).getRightWall().setClosed(true);
         field.getSquare(2, 3).getRightWall().setClosed(true);
         field.getSquare(3, 3).getUpperWall().setClosed(true);
-        field.getSquare(1, 4).getRightWall().setClosed(true);
+        field.getSquare(1, 4).getRightWall().setClosed(true);*/
 
     }
 
